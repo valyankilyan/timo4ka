@@ -10,3 +10,4 @@ class FlaskConfig(object):
     
 min_side = 10
 max_side = 1600
+tima_path = 'tima_images'

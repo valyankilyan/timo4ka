@@ -6,6 +6,7 @@ from app import app
 import config
 from PIL import Image
 import random
+from os import listdir
 
 
 @app.route('/')
@@ -13,8 +14,9 @@ def index():
     getTimaImage()
     return render_template('index.html', title='Главная')
 
+
 def getTimaImage():
-    image = Image.open('important example.JPG')
+    image = get_random_image()
     width = randomSide()
     height = randomSide()
     rotation = getRotation()
@@ -25,6 +27,11 @@ def getTimaImage():
     new_image = new_image.rotate(rotation)
     print("rotate")
     new_image.save('app/static/new_image.jpg')
+
+def get_random_image():
+    photos = listdir(config.tima_path)
+    ph = photos[random.randint(0, len(photos)-1)]
+    return Image.open(config.tima_path + '/' + ph)
 
 def randomSide():
     return random.randint(config.min_side, config.max_side)
